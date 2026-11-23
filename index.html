@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Keystone Roofing & Exteriors</title>
+<meta name="description" content="Roof replacement, storm and hail repair, metal roofing and gutters across Dallas–Fort Worth. Get an instant roof estimate.">
+<meta name="theme-color" content="#0f1215">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Inter+Tight:wght@400;500;600;700&display=swap">
+<script>(() => { let t = null; try { t = localStorage.getItem('keystone-theme'); } catch (e) {} document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark'; })();</script>
+<style>
+/* Layout: contractor site, photo-led. Glass top bar → floating pill; hero; before/after; instant estimate (the centerpiece); pinned install-day story; services; reviews; service area; FAQ; footer; phone action bar. */
+:root {
+  --bg: #eef0f1; --surface: #ffffff; --raise: #f6f7f8; --ink: #13171b; --muted: #5d6670; --line: rgba(19, 23, 27, .12);
+  --copper: #b45f24; --copper-ink: #ffffff; --ok: #2f7d4f; --glass: rgba(255, 255, 255, .72);
+  --display: "Archivo", "Inter Tight", system-ui, sans-serif; --sans: "Inter Tight", -apple-system, system-ui, sans-serif;
+  --spring: linear(0, 0.049, 0.154, 0.28, 0.404, 0.517, 0.615, 0.697, 0.763, 0.817, 0.86, 0.893, 0.918, 0.938, 0.954, 0.965, 0.974, 0.98, 0.985, 0.989, 0.992, 0.994, 0.996, 0.998, 0.999, 1);
+  --bounce: linear(0, 0.052, 0.166, 0.31, 0.453, 0.588, 0.7, 0.794, 0.865, 0.919, 0.957, 0.983, 0.999, 1.009, 1.013, 1.015, 1.014, 1.013, 1.011, 1.008, 1.006, 1.005, 1.003, 1.002, 1.001, 1);
+  --wrap: 80rem; --gut: max(20px, env(safe-area-inset-left, 0px)); --gutR: max(20px, env(safe-area-inset-right, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
+}
+:root[data-theme="dark"] { --bg: #0f1215; --surface: #171b20; --raise: #1d2228; --ink: #eef0f2; --muted: #9aa3ad; --line: rgba(238, 240, 242, .12); --copper: #e3924f; --copper-ink: #1b1209; --ok: #6cc38f; --glass: rgba(23, 27, 32, .72); color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 1rem/1.55 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+button, input { font: inherit; color: inherit; }
+button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+a { color: inherit; }
+[hidden] { display: none !important; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gut); padding-right: var(--gutR); }
+:focus-visible { outline: 2px solid var(--copper); outline-offset: 3px; border-radius: 8px; }
+.skip { position: fixed; left: 12px; top: -60px; z-index: 100; background: var(--ink); color: var(--bg); padding: .6rem .9rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: top .3s var(--spring); }
+.skip:focus-visible { top: max(12px, env(safe-area-inset-top, 0px)); }
+.eyebrow { font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--copper); }
+.h2 { font-family: var(--display); font-weight: 700; font-stretch: 108%; font-size: clamp(2.2rem, 4.6vw, 3.9rem); line-height: .98; letter-spacing: -0.03em; }
+.h2 span { color: var(--muted); font-weight: 500; }
+.lead { color: var(--muted); font-size: 1.08rem; max-width: 34rem; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; border: 0; border-radius: 999px; padding: .9rem 1.35rem; font-weight: 600; font-size: .95rem; text-decoration: none; cursor: pointer; white-space: nowrap;
+  background: var(--copper); color: var(--copper-ink); transition: transform .5s var(--spring), background-color .25s, box-shadow .4s var(--spring); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 30px -16px color-mix(in srgb, var(--copper) 70%, transparent); }
+.btn:active { transform: scale(.97); transition-duration: 100ms; }
+.btn.ink { background: var(--ink); color: var(--bg); }
+.btn.ghost { background: transparent; color: inherit; box-shadow: inset 0 0 0 1px currentColor; }
+.btn.ghost:hover { box-shadow: inset 0 0 0 1px currentColor; background: color-mix(in srgb, currentColor 8%, transparent); }
+.btn .arr { transition: transform .5s var(--spring); }
+.btn:hover .arr { transform: translateX(3px); }
+section { scroll-margin-top: 80px; }
+
+/* ---------- Top bar ---------- */
+.bar-shell { position: fixed; z-index: 65; left: 0; right: 0; top: 0; padding-top: env(safe-area-inset-top, 0px); pointer-events: none; }
+.bar { pointer-events: auto; position: relative; margin: 0 auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; max-width: 100%; height: 76px;
+  padding: 0 max(28px, env(safe-area-inset-right, 0px)) 0 max(28px, env(safe-area-inset-left, 0px)); color: #fff; border-radius: 0;
+  transition: max-width .8s var(--spring), height .6s var(--spring), margin-top .6s var(--spring), border-radius .6s var(--spring), padding .6s var(--spring), color .4s, box-shadow .6s; }
+.bar::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(170%); backdrop-filter: blur(22px) saturate(170%); opacity: 0; transition: opacity .4s; }
+.bar.pill { max-width: min(1040px, calc(100% - 24px)); height: 60px; margin-top: 12px; border-radius: 999px; padding: 0 8px 0 20px; color: var(--ink); box-shadow: 0 0 0 1px var(--line), 0 18px 40px -22px rgba(0,0,0,.5); }
+.bar.pill::before, .bar.solid::before { opacity: 1; }
+.bar.solid { color: var(--ink); }
+.logo { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; justify-self: start; font-family: var(--display); font-weight: 800; font-stretch: 115%; font-size: 1.08rem; letter-spacing: -0.01em; line-height: 1; }
+.logo small { display: block; font-family: var(--sans); font-weight: 500; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; opacity: .7; margin-top: 3px; font-stretch: 100%; }
+.logo svg { width: 30px; height: 30px; flex: none; transition: transform .8s var(--bounce); }
+.logo:hover svg { transform: translateY(-2px) scale(1.06); }
+.nav { position: relative; display: flex; gap: 2px; align-items: center; }
+.nav-item { position: relative; z-index: 1; border: 0; background: none; cursor: pointer; text-decoration: none; padding: .55rem .95rem; border-radius: 999px; font-size: .92rem; font-weight: 500; display: inline-flex; align-items: center; gap: .35rem; white-space: nowrap; }
+.nav-item svg { width: 10px; height: 10px; transition: transform .5s var(--spring); }
+.nav-item[aria-expanded="true"] svg { transform: rotate(180deg); }
+.nav-ind { position: absolute; z-index: 0; top: 50%; height: 36px; translate: 0 -50%; left: 0; width: 0; border-radius: 999px; opacity: 0; background: rgba(255,255,255,.16); transition: left .55s var(--spring), width .55s var(--spring), opacity .25s; pointer-events: none; }
+.bar.pill .nav-ind, .bar.solid .nav-ind { background: color-mix(in srgb, var(--ink) 9%, transparent); }
+.tools { justify-self: end; display: flex; align-items: center; gap: 6px; }
+.icon-btn { position: relative; width: 42px; height: 42px; border-radius: 999px; border: 0; background: transparent; display: grid; place-items: center; cursor: pointer; transition: background-color .25s, transform .5s var(--spring); }
+.icon-btn:hover { background: rgba(127,127,127,.16); }
+.icon-btn:active { transform: scale(.92); transition-duration: 100ms; }
+.icon-btn svg { width: 20px; height: 20px; }
+.phone { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; font-weight: 600; font-size: .9rem; padding: .5rem .8rem; border-radius: 999px; font-variant-numeric: tabular-nums; transition: background-color .25s; }
+.phone:hover { background: rgba(127,127,127,.16); }
+.phone { white-space: nowrap; }
+.bar.pill .phone { display: none; }
+.phone i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 25%, transparent); }
+.bar .cta { padding: .65rem 1.05rem; font-size: .88rem; }
+.menu-btn { display: none; }
+@media (max-width: 1060px) { .phone { display: none; } }
+@media (max-width: 900px) { .nav, .bar .cta { display: none; } .menu-btn { display: grid; } .bar { grid-template-columns: 1fr auto; } }
+.theme-btn svg { overflow: visible; }
+.theme-btn .core { transform-origin: 12px 12px; transition: transform .7s var(--bounce); }
+.theme-btn .cut { transition: transform .7s var(--spring); }
+.theme-btn .rays { transform-origin: 12px 12px; transition: transform .7s var(--spring), opacity .3s; }
+.theme-btn[data-mode="dark"] .core { transform: scale(1.45); }
+.theme-btn[data-mode="dark"] .cut { transform: translate(-8px, 6px); }
+.theme-btn[data-mode="dark"] .rays { transform: rotate(-90deg) scale(.4); opacity: 0; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+::view-transition-new(root) { z-index: 2; }
+
+/* Mega menu */
+.mega { position: absolute; left: 50%; top: calc(100% + 12px); width: min(920px, calc(100vw - 24px)); translate: -50% 0; transform-origin: 50% 0; color: var(--ink); border-radius: 26px; padding: 12px;
+  display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 12px; background: var(--glass); -webkit-backdrop-filter: blur(28px) saturate(170%); backdrop-filter: blur(28px) saturate(170%);
+  box-shadow: 0 0 0 1px var(--line), 0 40px 80px -30px rgba(0,0,0,.55); opacity: 0; transform: scale(.96) translateY(-8px); filter: blur(10px); visibility: hidden; pointer-events: none;
+  transition: opacity .25s, transform .55s var(--spring), filter .35s, visibility 0s linear .55s; }
+.mega.open { opacity: 1; transform: none; filter: none; visibility: visible; pointer-events: auto; transition: opacity .25s, transform .55s var(--spring), filter .35s, visibility 0s; }
+.mega-col { display: grid; align-content: start; gap: 2px; padding: 6px; }
+.mega-col .eyebrow { padding: 6px 12px 8px; color: var(--muted); }
+.mega-link { display: grid; grid-template-columns: auto 1fr; gap: .1rem .8rem; align-items: center; text-decoration: none; padding: .7rem .8rem; border-radius: 14px; transition: background-color .25s; }
+.mega-link .ic { grid-row: 1 / 3; width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--copper) 14%, transparent); color: var(--copper); transition: transform .5s var(--bounce); }
+.mega-link .ic svg { width: 20px; height: 20px; }
+.mega-link b { font-weight: 600; font-size: .98rem; }
+.mega-link small { color: var(--muted); font-size: .8rem; line-height: 1.35; }
+.mega-link:hover, .mega-link:focus-visible, .mega-link.active { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.mega-link:hover .ic, .mega-link.active .ic { transform: scale(1.08) rotate(-4deg); }
+.mega-preview { position: relative; border-radius: 18px; overflow: hidden; min-height: 300px; background: #1d2228; }
+.mega-preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity .5s, transform 1.2s var(--spring); }
+.mega-preview img.on { opacity: 1; transform: scale(1); }
+.mega-preview .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px; color: #fff; background: linear-gradient(transparent, rgba(0,0,0,.7)); }
+.mega-preview .cap b { font-family: var(--display); font-stretch: 110%; font-size: 1.3rem; display: block; line-height: 1.05; }
+.mega-preview .cap span { font-size: .84rem; opacity: .85; }
+
+/* Phone sheet + action bar */
+.sheet { position: fixed; inset: 0; z-index: 60; background: var(--bg); padding: calc(env(safe-area-inset-top, 0px) + 96px) var(--gutR) calc(env(safe-area-inset-bottom, 0px) + 96px) var(--gut);
+  display: flex; flex-direction: column; justify-content: space-between; clip-path: inset(0 0 100% 0 round 0 0 40px 40px); visibility: hidden; transition: clip-path .7s var(--spring), visibility 0s linear .7s; overscroll-behavior: contain; overflow-y: auto; }
+.sheet.open { clip-path: inset(0 0 0 0 round 0); visibility: visible; transition: clip-path .7s var(--spring), visibility 0s; }
+.sheet nav { display: grid; gap: .3rem; }
+.sheet nav a { font-family: var(--display); font-weight: 700; font-stretch: 110%; font-size: clamp(2.2rem, 10vw, 3rem); line-height: 1.1; letter-spacing: -0.02em; text-decoration: none; opacity: 0; transform: translateY(24px); transition: opacity .4s, transform .7s var(--spring); }
+.sheet.open nav a { opacity: 1; transform: none; transition-delay: calc(.12s + var(--i) * .06s); }
+.sheet .foot { color: var(--muted); font-size: .92rem; display: grid; gap: .3rem; }
+.menu-btn .l1, .menu-btn .l2 { transition: transform .55s var(--spring); transform-origin: center; transform-box: fill-box; }
+.menu-btn[aria-expanded="true"] .l1 { transform: translateY(3px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .l2 { transform: translateY(-3px) rotate(-45deg); }
+body.locked { overflow: hidden; }
+.action-bar { display: none; }
+@media (max-width: 900px) {
+  .action-bar { position: fixed; z-index: 64; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom, 0px)); display: grid; grid-template-columns: 1fr 1.4fr; gap: 8px; padding: 8px; border-radius: 22px;
+    background: var(--glass); -webkit-backdrop-filter: blur(22px) saturate(170%); backdrop-filter: blur(22px) saturate(170%); box-shadow: 0 0 0 1px var(--line), 0 20px 40px -20px rgba(0,0,0,.6);
+    transform: translateY(140%); transition: transform .7s var(--spring); }
+  .action-bar.on { transform: none; }
+  .action-bar .btn { padding: .85rem .8rem; }
+  body { padding-bottom: 90px; }
+}
+
+/* ---------- Hero ---------- */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; align-items: end; color: #fff; overflow: hidden; background: #0d1013; }
+.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; transform: scale(1.12); animation: heroIn 2.4s var(--spring) .05s forwards; }
+@keyframes heroIn { to { transform: scale(1.02); } }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,10,12,.6) 0%, rgba(8,10,12,.1) 28%, rgba(8,10,12,.35) 58%, rgba(8,10,12,.92) 100%); }
+.hero .wrap { position: relative; z-index: 1; width: 100%; padding-block: 0 clamp(2rem, 6vh, 4.5rem); display: grid; gap: 2rem; }
+.hero h1 { font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: clamp(2.6rem, 5.6vw, 5.2rem); line-height: .94; letter-spacing: -0.035em; max-width: 20ch; }
+.hero h1 .ln { display: block; overflow: hidden; padding-bottom: .05em; }
+.hero h1 .ln > span { display: inline-block; transform: translateY(105%); animation: lineUp 1.3s var(--spring) forwards; animation-delay: calc(.3s + var(--i) * .12s); }
+.hero h1 em { font-style: normal; color: #f2b27a; }
+@keyframes lineUp { to { transform: none; } }
+.hero .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; opacity: 0; transform: translateY(18px); animation: fadeUp 1.2s var(--spring) .8s forwards; }
+@keyframes fadeUp { to { opacity: 1; transform: none; } }
+.hero .row p { font-size: 1.1rem; color: rgba(255,255,255,.86); max-width: 32rem; }
+.hero .ctas { display: flex; flex-wrap: wrap; gap: .6rem; }
+.trust { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .2rem; }
+.trust span { display: inline-flex; align-items: center; gap: .45rem; font-size: .84rem; font-weight: 500; padding: .45rem .8rem; border-radius: 999px; background: rgba(255,255,255,.1); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); }
+.trust b { color: #f2b27a; }
+
+/* ---------- Before / after ---------- */
+.ba-sec { padding-block: clamp(5rem, 10vw, 8rem) clamp(3rem, 6vw, 5rem); }
+.ba-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(2rem, 4vw, 4rem); align-items: center; }
+@media (max-width: 900px) { .ba-grid { grid-template-columns: 1fr; } }
+.ba-copy { display: grid; gap: 1.2rem; }
+.ba-copy ul { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .7rem; }
+.ba-copy li { display: grid; grid-template-columns: 22px 1fr; gap: .7rem; align-items: start; }
+.ba-copy li svg { width: 22px; height: 22px; color: var(--copper); margin-top: 1px; }
+.compare { position: relative; aspect-ratio: 16 / 10; border-radius: 26px; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: ew-resize; background: #1d2228; max-width: 100%; box-shadow: 0 30px 60px -36px rgba(0,0,0,.6); }
+.compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.compare .after { clip-path: inset(0 0 0 var(--p, 50%)); }
+.compare .tag { position: absolute; top: 14px; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: .38rem .7rem; border-radius: 999px; color: #fff; background: rgba(10,12,14,.5); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.compare .tag.l { left: 14px; } .compare .tag.r { right: 14px; background: color-mix(in srgb, var(--copper) 85%, transparent); color: var(--copper-ink); }
+.handle { position: absolute; top: 0; bottom: 0; left: var(--p, 50%); width: 0; }
+.handle::before { content: ""; position: absolute; inset: 0 auto 0 -1px; width: 2px; background: #fff; box-shadow: 0 0 12px rgba(0,0,0,.4); }
+.knob { position: absolute; top: 50%; left: 0; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%; background: #fff; color: #13171b; box-shadow: 0 6px 20px rgba(0,0,0,.35); display: grid; place-items: center; transition: transform .4s var(--spring); }
+.compare.dragging .knob { transform: scale(1.1); }
+.knob svg { width: 22px; height: 22px; }
+.compare .hint { position: absolute; left: 50%; bottom: 14px; translate: -50% 0; font-size: .78rem; font-weight: 600; color: #fff; padding: .42rem .8rem; border-radius: 999px; background: rgba(10,12,14,.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: opacity .3s, translate .5s var(--spring); pointer-events: none; white-space: nowrap; }
+.compare .hint.gone { opacity: 0; translate: -50% 8px; }
+
+/* ---------- Estimate ---------- */
+.est { padding-block: clamp(4rem, 9vw, 7rem); background: var(--raise); border-block: 1px solid var(--line); }
+.est-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: clamp(2rem, 4vw, 3rem); }
+.est-grid { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(1.2rem, 3vw, 2.4rem); align-items: start; }
+@media (max-width: 960px) { .est-grid { grid-template-columns: 1fr; } }
+.panel { background: var(--surface); border-radius: 26px; padding: clamp(1.2rem, 2.6vw, 2rem); box-shadow: 0 0 0 1px var(--line); display: grid; gap: 1.8rem; }
+.q { display: grid; gap: .8rem; }
+.q-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.q-head label, .q-head span.l { font-weight: 600; }
+.q-head output { font-family: var(--display); font-weight: 700; font-stretch: 110%; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.range { position: relative; height: 44px; touch-action: pan-y; cursor: pointer; user-select: none; -webkit-user-select: none; outline: none; }
+.range .rail { position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 12%, transparent); }
+.range .fill { position: absolute; left: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--copper); width: var(--x, 0px); }
+.range .thumb { position: absolute; top: 50%; left: var(--x, 0px); width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 4px 14px rgba(0,0,0,.3); transition: transform .4s var(--spring); }
+.range.dragging .thumb, .range:focus-visible .thumb { transform: scale(1.15); }
+.range:focus-visible .thumb { box-shadow: 0 0 0 3px var(--copper), 0 4px 14px rgba(0,0,0,.3); }
+.range .scale { position: absolute; left: 0; right: 0; bottom: -14px; display: flex; justify-content: space-between; font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.seg { position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 4px; border-radius: 14px; background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.seg button { position: relative; z-index: 1; border: 0; background: none; padding: .7rem .4rem; border-radius: 10px; font-weight: 500; font-size: .9rem; cursor: pointer; display: grid; gap: .1rem; }
+.seg button small { font-size: .72rem; color: var(--muted); font-weight: 400; }
+.seg .thumb { position: absolute; z-index: 0; top: 4px; bottom: 4px; left: 4px; border-radius: 10px; background: var(--surface); box-shadow: 0 1px 3px rgba(0,0,0,.2), 0 0 0 1px var(--line); transition: transform .55s var(--spring), width .55s var(--spring); }
+.mats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; }
+@media (max-width: 520px) { .mats { grid-template-columns: 1fr; } }
+.mat { position: relative; border: 0; padding: 0; background: none; cursor: pointer; text-align: left; border-radius: 18px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); transition: transform .5s var(--spring), box-shadow .3s; }
+.mat:hover { transform: translateY(-2px); }
+.mat:active { transform: scale(.98); transition-duration: 100ms; }
+.mat[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--copper); }
+.mat .ph { aspect-ratio: 4 / 3; overflow: hidden; }
+.mat .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--spring); }
+.mat:hover .ph img { transform: scale(1.04); }
+.mat .t { padding: .75rem .85rem; display: grid; gap: .1rem; }
+.mat .t b { font-weight: 600; font-size: .95rem; }
+.mat .t small { color: var(--muted); font-size: .8rem; }
+.mat .check { position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 50%; background: var(--copper); color: var(--copper-ink); display: grid; place-items: center; transform: scale(0); transition: transform .55s var(--bounce); }
+.mat[aria-pressed="true"] .check { transform: scale(1); }
+.mat .check svg { width: 14px; height: 14px; }
+.result { position: sticky; top: 96px; background: #13171b; color: #eef0f2; border-radius: 26px; padding: clamp(1.4rem, 2.8vw, 2.2rem); display: grid; gap: 1.4rem; overflow: hidden; box-shadow: 0 30px 70px -40px rgba(0,0,0,.7); }
+:root[data-theme="dark"] .result { background: #1d232a; box-shadow: 0 0 0 1px var(--line), 0 30px 70px -40px rgba(0,0,0,.8); }
+.result::before { content: ""; position: absolute; inset: -40% -20% auto auto; width: 70%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(227,146,79,.28), transparent 65%); pointer-events: none; }
+.result .eyebrow { color: #f2b27a; }
+.price { white-space: nowrap; font-family: var(--display); font-weight: 800; font-stretch: 108%; font-size: clamp(1.9rem, 2.9vw, 2.8rem); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.price span { color: #9aa3ad; font-weight: 500; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,.1); border-radius: 16px; overflow: hidden; }
+.stats div { background: #13171b; padding: .8rem .9rem; }
+:root[data-theme="dark"] .stats div { background: #1d232a; }
+.stats dt { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: #9aa3ad; }
+.stats dd { margin: .25rem 0 0; font-weight: 700; font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+.result form { display: grid; gap: .6rem; }
+.result .fields { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.result input { width: 100%; padding: .85rem 1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.06); color: #eef0f2; }
+.result input::placeholder { color: #8b949e; }
+.result input:focus-visible { outline: 2px solid #f2b27a; outline-offset: 1px; }
+.result label { font-size: .78rem; color: #9aa3ad; display: grid; gap: .3rem; }
+.result .note { font-size: .8rem; color: #9aa3ad; }
+.result .msg { font-size: .9rem; color: #f2b27a; min-height: 1.3em; }
+.result .btn { width: 100%; }
+
+/* ---------- Install-day story (pinned) ---------- */
+.story { position: relative; height: 420vh; background: #0b0d0f; color: #fff; }
+.story .pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.story .layer { position: absolute; inset: 0; overflow: hidden; }
+.story .layer img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+.story .layer::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,8,10,.85) 0%, rgba(6,8,10,.45) 45%, rgba(6,8,10,.1) 100%); }
+.story .copy { position: absolute; left: var(--gut); bottom: clamp(3rem, 12vh, 7rem); width: min(36rem, calc(100% - 40px)); z-index: 2; }
+.story .chap { position: absolute; left: 0; bottom: 0; width: 100%; opacity: 0; }
+.story .chap .eyebrow { color: #f2b27a; }
+.story .chap h2 { font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: clamp(2.4rem, 5.6vw, 4.8rem); line-height: .95; letter-spacing: -0.03em; margin-block: .6rem 1rem; }
+.story .chap p { font-size: 1.06rem; color: rgba(255,255,255,.86); max-width: 30rem; }
+.story .clock { position: absolute; z-index: 2; right: var(--gutR); top: 50%; translate: 0 -50%; text-align: right; }
+.story .clock b { display: block; font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: clamp(3rem, 7vw, 6rem); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+.story .clock span { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.story .ticks { display: flex; gap: 6px; justify-content: flex-end; margin-top: 1rem; }
+.story .ticks i { width: 26px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.25); overflow: hidden; position: relative; }
+.story .ticks i b { position: absolute; inset: 0; width: 0; background: #f2b27a; }
+@media (max-width: 760px) { .story .clock { top: calc(env(safe-area-inset-top, 0px) + 96px); translate: none; } .story .clock b { font-size: 2.6rem; } }
+
+/* ---------- Services ---------- */
+.svc-sec { padding-block: clamp(5rem, 10vw, 8rem) clamp(3rem, 6vw, 5rem); }
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); grid-auto-rows: 260px; gap: 14px; margin-top: clamp(2rem, 4vw, 3rem); }
+.tile { position: relative; border-radius: 24px; overflow: hidden; color: #fff; text-decoration: none; background: #1d2228; display: flex; align-items: end; isolation: isolate; }
+.tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1.2s var(--spring); }
+.tile::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 35%, rgba(6,8,10,.85)); }
+.tile:hover img { transform: scale(1.04); }
+.tile .in { padding: 1.3rem 1.4rem; display: grid; gap: .3rem; width: 100%; }
+.tile b { font-family: var(--display); font-weight: 700; font-stretch: 110%; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.02em; }
+.tile small { color: rgba(255,255,255,.8); font-size: .9rem; }
+.tile .go { position: absolute; top: 16px; right: 16px; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); display: grid; place-items: center; transition: transform .6s var(--bounce), background-color .25s; }
+.tile:hover .go { transform: rotate(-45deg); background: var(--copper); color: var(--copper-ink); }
+.t1 { grid-column: span 3; grid-row: span 2; } .t2 { grid-column: span 3; } .t3 { grid-column: span 3; } .t4 { grid-column: span 2; } .t5 { grid-column: span 2; } .t6 { grid-column: span 2; }
+@media (max-width: 860px) { .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 220px; } .t1 { grid-column: span 2; } .t2, .t3 { grid-column: span 2; } .t4, .t5 { grid-column: span 1; } .t6 { grid-column: span 2; } }
+.tile.info { background: var(--copper); color: var(--copper-ink); align-items: stretch; }
+.tile.info::after { display: none; }
+.tile.info .in { align-content: space-between; height: 100%; }
+.tile.info b { font-size: 2.6rem; }
+
+/* ---------- Reviews ---------- */
+.rev-sec { padding-block: clamp(3rem, 6vw, 5rem) clamp(5rem, 9vw, 7rem); }
+.rev-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; margin-bottom: 2rem; }
+.score { display: flex; align-items: center; gap: 1rem; }
+.score b { font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: 3.4rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.stars { display: flex; gap: 2px; color: var(--copper); }
+.stars svg { width: 18px; height: 18px; }
+.reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 900px) { .reviews { grid-template-columns: 1fr; } }
+.review { background: var(--surface); border-radius: 22px; padding: 1.5rem; box-shadow: 0 0 0 1px var(--line); display: grid; gap: 1rem; align-content: space-between; transition: transform .6s var(--spring), box-shadow .5s; }
+.review:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--line), 0 24px 40px -28px rgba(0,0,0,.45); }
+.review q { quotes: "“" "”"; font-size: 1.08rem; line-height: 1.5; }
+.review .who { display: flex; align-items: center; gap: .8rem; color: var(--muted); font-size: .88rem; }
+.review .av { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: color-mix(in srgb, var(--copper) 18%, transparent); color: var(--copper); }
+.review .who b { color: var(--ink); display: block; font-weight: 600; }
+
+/* ---------- Service area ---------- */
+.area { position: relative; color: #fff; overflow: hidden; background: #0b0d0f; }
+.area > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
+.area::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6,8,10,.92), rgba(6,8,10,.55) 60%, rgba(6,8,10,.25)); }
+.area .wrap { position: relative; z-index: 1; padding-block: clamp(5rem, 10vw, 8rem); display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+@media (max-width: 900px) { .area .wrap { grid-template-columns: 1fr; } }
+.area .h2 span { color: rgba(255,255,255,.6); }
+.area p.lead { color: rgba(255,255,255,.8); margin-top: 1rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.4rem; }
+.chips span { padding: .42rem .8rem; border-radius: 999px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); font-size: .88rem; }
+.zip { border-radius: 26px; padding: 1.5rem; display: grid; gap: 1rem; background: rgba(255,255,255,.08); -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+.zip h3 { font-family: var(--display); font-weight: 700; font-stretch: 110%; font-size: 1.6rem; letter-spacing: -0.02em; }
+.zip .row { display: flex; gap: .5rem; }
+.zip input { flex: 1; min-width: 0; padding: .9rem 1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.92); color: #13171b; font-size: 1.05rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.zip .res { min-height: 3.2em; display: flex; gap: .7rem; align-items: start; font-size: .98rem; }
+.zip .res .dot { width: 10px; height: 10px; border-radius: 50%; margin-top: .45em; flex: none; background: rgba(255,255,255,.3); transition: background-color .3s, transform .5s var(--bounce); }
+.zip .res.yes .dot { background: #6cc38f; transform: scale(1.3); }
+.zip .res.no .dot { background: #f2b27a; transform: scale(1.3); }
+
+/* ---------- FAQ ---------- */
+.faq-sec { padding-block: clamp(5rem, 9vw, 7rem); }
+.faq-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(2rem, 4vw, 4rem); align-items: start; }
+@media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; } }
+.faq { border-top: 1px solid var(--line); }
+.qa { border-bottom: 1px solid var(--line); }
+.qa button { width: 100%; border: 0; background: none; padding: 1.3rem 0; display: flex; justify-content: space-between; align-items: center; gap: 1rem; text-align: left; font-weight: 600; font-size: 1.08rem; cursor: pointer; }
+.qa .pm { position: relative; width: 30px; height: 30px; border-radius: 50%; flex: none; box-shadow: inset 0 0 0 1px var(--line); transition: background-color .3s, transform .6s var(--spring); }
+.qa .pm::before, .qa .pm::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.6px; margin: -.8px 0 0 -6px; background: currentColor; border-radius: 1px; transition: transform .5s var(--spring); }
+.qa .pm::after { transform: rotate(90deg); }
+.qa[data-open="true"] .pm { background: var(--copper); color: var(--copper-ink); transform: rotate(180deg); }
+.qa[data-open="true"] .pm::after { transform: rotate(0deg); }
+.qa .ans { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s var(--spring); }
+.qa[data-open="true"] .ans { grid-template-rows: 1fr; }
+.qa .ans > div { overflow: hidden; }
+.qa .ans p { color: var(--muted); padding-bottom: 1.3rem; max-width: 44rem; }
+
+/* ---------- Footer ---------- */
+footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(--line); }
+.cta-band { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; padding-bottom: clamp(3rem, 6vw, 4rem); margin-bottom: clamp(3rem, 6vw, 4rem); border-bottom: 1px solid var(--line); }
+.foot-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 2rem; }
+@media (max-width: 760px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+.foot-grid h4 { margin: 0 0 .9rem; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.foot-grid a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .5s var(--spring); }
+.foot-grid a:hover { background-size: 100% 1px; }
+.legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .8rem; }
+.toast { position: fixed; z-index: 80; left: 50%; bottom: max(20px, env(safe-area-inset-bottom, 0px)); translate: -50% 0; background: var(--ink); color: var(--bg); padding: .8rem 1.1rem; border-radius: 999px; font-weight: 500; font-size: .92rem; transform: translateY(160%); opacity: 0; transition: transform .6s var(--spring), opacity .3s; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+.toast.on { transform: none; opacity: 1; }
+@media (max-width: 900px) { .toast { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 86px); } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; } .hero-img { transform: scale(1.02); } }
+@media (prefers-reduced-transparency: reduce) { .bar::before, .mega, .action-bar, .zip { -webkit-backdrop-filter: none; backdrop-filter: none; } .bar::before, .mega, .action-bar { background: var(--surface); } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="bar-shell">
+  <header class="bar" id="bar">
+    <a class="logo" href="#top" aria-label="Keystone Roofing and Exteriors, home" translate="no">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 17 16 5l13 12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.5 27h7l1.6-9.5h-10.2L12.5 27Z" fill="#e3924f"/></svg>
+      <span>KEYSTONE<small>Roofing & Exteriors</small></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <span class="nav-ind" id="navInd" aria-hidden="true"></span>
+      <button class="nav-item" id="svcBtn" type="button" aria-expanded="false" aria-controls="mega">Services <svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></button>
+      <a class="nav-item" href="#estimate">Instant Estimate</a>
+      <a class="nav-item" href="#process">Install Day</a>
+      <a class="nav-item" href="#reviews">Reviews</a>
+      <div class="mega" id="mega" role="region" aria-label="Services menu">
+        <div class="mega-col">
+          <div class="eyebrow">Roofing</div>
+          <a class="mega-link active" href="#services" data-img="crew" data-title="Roof Replacement" data-sub="Tear-off to final nail in one day"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 12 4l9 8"/><path d="M5 10v10h14V10"/></svg></span><b>Roof Replacement</b><small>Full tear-off and new roof</small></a>
+          <a class="mega-link" href="#services" data-img="tearoff" data-title="Storm & Hail Repair" data-sub="We meet your insurance adjuster"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 15a4 4 0 0 1 .5-8A5.5 5.5 0 0 1 18 9a3.5 3.5 0 0 1-.5 6"/><path d="m12 13-2 4h3l-2 4"/></svg></span><b>Storm & Hail Repair</b><small>Insurance claim help included</small></a>
+          <a class="mega-link" href="#services" data-img="metal2" data-title="Metal Roofing" data-sub="Standing seam, 50-year life"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V9l8-5 8 5v11"/><path d="M8 20V8.5M12 20V6M16 20V8.5"/></svg></span><b>Metal Roofing</b><small>Standing-seam panels</small></a>
+        </div>
+        <div class="mega-col">
+          <div class="eyebrow">Exteriors</div>
+          <a class="mega-link" href="#services" data-img="gutter" data-title="Gutters" data-sub="Seamless 6-inch aluminum"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v3a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7Z"/><path d="M17 13v7"/></svg></span><b>Gutters</b><small>Seamless, with leaf guards</small></a>
+          <a class="mega-link" href="#services" data-img="repair" data-title="Inspections" data-sub="Free, with photos in 24 hours"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></span><b>Free Inspections</b><small>Photo report within 24 hours</small></a>
+          <a class="mega-link" href="#estimate" data-img="shingle" data-title="Instant Estimate" data-sub="A price range in 30 seconds"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h8"/></svg></span><b>Instant Estimate</b><small>Price your roof in 30 seconds</small></a>
+        </div>
+        <div class="mega-preview" aria-hidden="true">
+          <img src="img/crew.jpg" alt="" class="on" data-k="crew" width="1400" height="933">
+          <img src="img/tearoff.jpg" alt="" data-k="tearoff" width="1800" height="1200" loading="lazy">
+          <img src="img/metal2.jpg" alt="" data-k="metal2" width="1200" height="1800" loading="lazy">
+          <img src="img/gutter.jpg" alt="" data-k="gutter" width="1200" height="800" loading="lazy">
+          <img src="img/repair.jpg" alt="" data-k="repair" width="1200" height="800" loading="lazy">
+          <img src="img/shingle.jpg" alt="" data-k="shingle" width="1200" height="900" loading="lazy">
+          <div class="cap"><b id="megaTitle">Roof Replacement</b><span id="megaSub">Tear-off to final nail in one day</span></div>
+        </div>
+      </div>
+    </nav>
+    <div class="tools">
+      <a class="phone" href="tel:+12145550136"><i aria-hidden="true"></i>(214) 555-0136</a>
+      <button class="icon-btn theme-btn" type="button" id="themeBtn" aria-label="Switch to light mode">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><mask id="moonMask"><rect width="24" height="24" fill="#fff"/><circle class="cut" cx="24" cy="2" r="6" fill="#000"/></mask><circle class="core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#moonMask)"/><g class="rays" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2.5v2"/><path d="M12 19.5v2"/><path d="M2.5 12h2"/><path d="M19.5 12h2"/><path d="m5.3 5.3 1.4 1.4"/><path d="m17.3 17.3 1.4 1.4"/><path d="m5.3 18.7 1.4-1.4"/><path d="m17.3 6.7 1.4-1.4"/></g></svg>
+      </button>
+      <a class="btn cta" href="#estimate">Free Inspection</a>
+      <button class="icon-btn menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="l1" d="M5 9h14"/><path class="l2" d="M5 15h14"/></svg></button>
+    </div>
+  </header>
+</div>
+
+<div class="sheet" id="sheet" aria-label="Menu">
+  <nav aria-label="Mobile">
+    <a href="#services" style="--i:0">Services</a>
+    <a href="#estimate" style="--i:1">Instant Estimate</a>
+    <a href="#process" style="--i:2">Install Day</a>
+    <a href="#reviews" style="--i:3">Reviews</a>
+    <a href="#area" style="--i:4">Service Area</a>
+  </nav>
+  <div class="foot"><span>Mon–Sat 7:00–19:00 · Storm line 24/7</span><span>(214) 555-0136</span></div>
+</div>
+
+<div class="action-bar" id="actionBar">
+  <a class="btn ghost" href="tel:+12145550136">Call Now</a>
+  <a class="btn" href="#estimate">Get My Estimate</a>
+</div>
+
+<main id="main">
+  <section class="hero" id="top" aria-label="Keystone Roofing">
+    <img class="hero-img" src="img/hero.jpg" alt="A newly built home with a fresh dark shingle roof" width="2200" height="1136" fetchpriority="high">
+    <div class="wrap">
+      <h1><span class="ln"><span style="--i:0">A new roof in one day.</span></span><span class="ln"><span style="--i:1"><em>Built for the next hailstorm.</em></span></span></h1>
+      <div class="row">
+        <div style="display:grid;gap:1.2rem">
+          <p>Roof replacement and storm repair across Dallas–Fort Worth. Free inspection, a fixed price before we start, and help with your insurance claim.</p>
+          <div class="trust"><span><b>★ 4.9</b> 1,240 reviews (example)</span><span>Licensed & insured</span><span>10-year workmanship warranty</span></div>
+        </div>
+        <div class="ctas"><a class="btn" href="#estimate">Get My Instant Estimate <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="#process">See Install Day</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ba-sec" id="results" aria-label="Before and after">
+    <div class="wrap ba-grid">
+      <div class="ba-copy">
+        <div class="eyebrow">Before & after</div>
+        <h2 class="h2">From storm damage to <span>a roof that adds value.</span></h2>
+        <p class="lead">Drag across the photo. Most of the homes we replace have hail bruising or missing shingles their owners never saw from the ground.</p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>Class 4 impact-rated shingles, the top hail rating</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>Full tear-off to the deck, with rotten decking replaced at a set price</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg><span>Ice-and-water shield in every valley and around every pipe</span></li>
+        </ul>
+      </div>
+      <div class="compare" id="compare" style="--p:50%" role="slider" tabindex="0" aria-label="Compare before and after" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <img src="img/before.jpg" alt="An older house with a damaged, sagging roof" width="1600" height="775" loading="lazy">
+        <img class="after" src="img/after.jpg" alt="A white farmhouse with a clean new roof" width="1600" height="913" loading="lazy">
+        <span class="tag l">Before</span><span class="tag r">After</span>
+        <div class="handle"><div class="knob"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5 2 10l5 5M13 5l5 5-5 5"/></svg></div></div>
+        <span class="hint" id="baHint">Drag to compare</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="est" id="estimate" aria-label="Instant roof estimate">
+    <div class="wrap">
+      <div class="est-head">
+        <div><div class="eyebrow">Instant estimate</div><h2 class="h2" style="margin-top:.6rem">Price your roof <span>in 30 seconds.</span></h2></div>
+        <p class="lead">Answer four questions. You get the same range our estimators start from, before anyone climbs a ladder.</p>
+      </div>
+      <div class="est-grid">
+        <div class="panel">
+          <div class="q">
+            <div class="q-head"><span class="l" id="sqftL">Home size</span><output id="sqftOut" for="sqft">2,400 sq ft</output></div>
+            <div class="range" id="sqft" role="slider" tabindex="0" aria-labelledby="sqftL" aria-valuemin="1000" aria-valuemax="5000" aria-valuenow="2400">
+              <div class="rail"></div><div class="fill"></div><div class="thumb"></div>
+              <div class="scale" aria-hidden="true"><span>1,000</span><span>3,000</span><span>5,000</span></div>
+            </div>
+          </div>
+          <div class="q">
+            <div class="q-head"><span class="l" id="storiesL">Stories</span></div>
+            <div class="seg" role="group" aria-labelledby="storiesL" data-seg="stories"><span class="thumb"></span><button type="button" aria-pressed="true" data-v="1">One</button><button type="button" aria-pressed="false" data-v="2">Two</button><button type="button" aria-pressed="false" data-v="3">Three</button></div>
+          </div>
+          <div class="q">
+            <div class="q-head"><span class="l" id="pitchL">Roof pitch</span></div>
+            <div class="seg" role="group" aria-labelledby="pitchL" data-seg="pitch"><span class="thumb"></span><button type="button" aria-pressed="false" data-v="low">Low<small>Easy to walk</small></button><button type="button" aria-pressed="true" data-v="std">Standard<small>Most homes</small></button><button type="button" aria-pressed="false" data-v="steep">Steep<small>Needs harness</small></button></div>
+          </div>
+          <div class="q">
+            <div class="q-head"><span class="l" id="matL">Material</span></div>
+            <div class="mats" role="group" aria-labelledby="matL" id="mats">
+              <button class="mat" type="button" aria-pressed="true" data-v="shingle"><div class="ph"><img src="img/shingle.jpg" alt="" width="1200" height="900" loading="lazy"></div><div class="t"><b>Impact shingles</b><small>30-year · Class 4</small></div><span class="check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.5 3 3 6-7"/></svg></span></button>
+              <button class="mat" type="button" aria-pressed="false" data-v="metal"><div class="ph"><img src="img/metal.jpg" alt="" width="1200" height="800" loading="lazy"></div><div class="t"><b>Standing-seam metal</b><small>50-year · fire rated</small></div><span class="check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.5 3 3 6-7"/></svg></span></button>
+              <button class="mat" type="button" aria-pressed="false" data-v="tile"><div class="ph"><img src="img/tile.jpg" alt="" width="1200" height="800" loading="lazy"></div><div class="t"><b>Concrete tile</b><small>50-year · heavy</small></div><span class="check" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3.5 8.5 3 3 6-7"/></svg></span></button>
+            </div>
+          </div>
+        </div>
+        <aside class="result" aria-labelledby="resultL">
+          <div><div class="eyebrow" id="resultL">Your estimate</div><div class="price" id="priceOut" aria-live="polite">$0 <span>–</span> $0</div></div>
+          <dl class="stats" style="margin:0">
+            <div><dt>Roof area</dt><dd id="sqOut">0 squares</dd></div>
+            <div><dt>Install</dt><dd id="daysOut">1 day</dd></div>
+            <div><dt>Financing</dt><dd id="moOut">$0/mo</dd></div>
+          </dl>
+          <form id="bookForm" novalidate>
+            <div class="fields">
+              <label for="fName">Name<input id="fName" name="name" autocomplete="name" placeholder="Jordan Lee" required></label>
+              <label for="fPhone">Phone<input id="fPhone" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="(214) 555-0100" required></label>
+            </div>
+            <label for="fZip">ZIP code<input id="fZip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="75024" required></label>
+            <button class="btn" type="submit">Book My Free Inspection <span class="arr" aria-hidden="true">→</span></button>
+            <p class="msg" id="bookMsg" aria-live="polite"></p>
+          </form>
+          <p class="note">A guide range for Dallas–Fort Worth, including tear-off, underlayment and cleanup. Your fixed price comes after a free on-roof inspection. Financing shown at an example 9.99% APR over 120 months.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="process" aria-label="Install day">
+    <div class="pin">
+      <div class="layer" data-k="0"><img src="img/inspect.jpg" alt="A roofer checking shingles during an inspection" width="1800" height="1200" loading="lazy"></div>
+      <div class="layer" data-k="1"><img src="img/tearoff.jpg" alt="A roofer carrying bundles of shingles across the roof" width="1800" height="1200" loading="lazy"></div>
+      <div class="layer" data-k="2"><img src="img/install.jpg" alt="A roofer fastening new shingles with a power tool" width="1800" height="1200" loading="lazy"></div>
+      <div class="layer" data-k="3"><img src="img/done.jpg" alt="A finished home with a new roof among trees" width="1800" height="1201" loading="lazy"></div>
+      <div class="copy">
+        <div class="chap" data-k="0"><div class="eyebrow">Step 1 · Inspection</div><h2>We find what you can’t see from the driveway.</h2><p>A free on-roof inspection with photos of every bruise, crack and lifted shingle, sent to you within 24 hours.</p></div>
+        <div class="chap" data-k="1"><div class="eyebrow">Step 2 · Tear-off</div><h2>Down to bare wood by 9 am.</h2><p>Your yard is tarped and the old roof goes straight into our trailer. Any soft decking is replaced at the price we agreed up front.</p></div>
+        <div class="chap" data-k="2"><div class="eyebrow">Step 3 · Install</div><h2>New roof, same day.</h2><p>Synthetic underlayment, ice-and-water shield in the valleys, then impact-rated shingles hand-nailed to the manufacturer’s pattern.</p></div>
+        <div class="chap" data-k="3"><div class="eyebrow">Step 4 · Walkthrough</div><h2>Magnet sweep. Photos. Warranty.</h2><p>We sweep the lawn for nails twice, walk the roof with you, and register your warranty before we leave.</p></div>
+      </div>
+      <div class="clock" aria-hidden="true"><span>Install day</span><b id="clock">7:00</b><div class="ticks"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div></div>
+    </div>
+  </section>
+
+  <section class="svc-sec" id="services" aria-label="Services">
+    <div class="wrap">
+      <div class="est-head" style="margin:0"><div><div class="eyebrow">Services</div><h2 class="h2" style="margin-top:.6rem">Everything above <span>your gutters.</span></h2></div><p class="lead">One crew, one warranty, one point of contact from inspection to final walkthrough.</p></div>
+      <div class="bento">
+        <a class="tile t1" href="#estimate"><img src="img/crew.jpg" alt="Two roofers installing a new roof" width="1400" height="933" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Roof Replacement</b><small>Full tear-off and new roof, finished in one day for most homes.</small></div></a>
+        <a class="tile t2" href="#estimate"><img src="img/tearoff.jpg" alt="Storm-damaged shingles being replaced" width="1800" height="1200" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Storm & Hail Repair</b><small>We document the damage and meet your adjuster.</small></div></a>
+        <a class="tile t3" href="#estimate"><img src="img/metal2.jpg" alt="A standing-seam metal roof with a cupola" width="1200" height="1800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Metal Roofing</b><small>Standing-seam panels rated for 50 years.</small></div></a>
+        <a class="tile t4" href="#estimate"><img src="img/gutter.jpg" alt="Gutters along a roof edge" width="1200" height="800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Gutters</b><small>Seamless 6-inch.</small></div></a>
+        <a class="tile t5" href="#estimate"><img src="img/repair.jpg" alt="A roofer inspecting a roof" width="1200" height="800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Inspections</b><small>Free, with photos.</small></div></a>
+        <div class="tile info t6"><div class="in"><small style="color:inherit;opacity:.8;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem">Storm line</small><div><b>24/7</b><small style="color:inherit;opacity:.85;display:block">Emergency tarping within 4 hours of your call.</small></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rev-sec" id="reviews" aria-label="Reviews">
+    <div class="wrap">
+      <div class="rev-top">
+        <div><div class="eyebrow">Reviews</div><h2 class="h2" style="margin-top:.6rem">Neighbors <span>talk.</span></h2></div>
+        <div class="score"><b>4.9</b><div><div class="stars" aria-label="4.9 out of 5 stars"><svg viewBox="0 0 20 20" fill="currentColor"><path d="m10 1.5 2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="m10 1.5 2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="m10 1.5 2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="m10 1.5 2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="m10 1.5 2.6 5.6 6.1.7-4.5 4.2 1.2 6L10 15l-5.4 3 1.2-6L1.3 7.8l6.1-.7L10 1.5Z"/></svg></div><small style="color:var(--muted)">Example rating for this sample site</small></div></div>
+      </div>
+      <div class="reviews">
+        <figure class="review" style="margin:0"><q>Hail took out half our street in May. Keystone had photos to us the next morning and handled the adjuster meeting. New roof was on by Thursday night.</q><figcaption class="who"><span class="av" aria-hidden="true">MR</span><span><b>Maria R.</b>Example review · Plano</span></figcaption></figure>
+        <figure class="review" style="margin:0"><q>The estimate on the website was within $600 of the final price. No surprise charges, and they found two nails in the yard I would have stepped on.</q><figcaption class="who"><span class="av" aria-hidden="true">DT</span><span><b>Derek T.</b>Example review · Frisco</span></figcaption></figure>
+        <figure class="review" style="margin:0"><q>We switched to a metal roof. The crew was polite, quiet early in the morning, and cleaned up better than they found it.</q><figcaption class="who"><span class="av" aria-hidden="true">AK</span><span><b>Anita K.</b>Example review · McKinney</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="area" id="area" aria-label="Service area">
+    <img src="img/area.jpg" alt="" width="1800" height="1202" loading="lazy">
+    <div class="wrap">
+      <div><div class="eyebrow" style="color:#f2b27a">Service area</div><h2 class="h2" style="margin-top:.6rem">All of Dallas–Fort Worth, <span>and an hour beyond.</span></h2><p class="lead">Our crews leave from Plano and Arlington every morning, so most inspections happen within two days of your call.</p>
+        <div class="chips"><span>Dallas</span><span>Plano</span><span>Frisco</span><span>McKinney</span><span>Allen</span><span>Richardson</span><span>Arlington</span><span>Fort Worth</span><span>Irving</span><span>Denton</span></div></div>
+      <form class="zip" id="zipForm" novalidate>
+        <h3>Do we cover your street?</h3>
+        <label for="zipIn" style="color:rgba(255,255,255,.75);font-size:.85rem">Enter your ZIP code</label>
+        <div class="row"><input id="zipIn" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="75024"><button class="btn" type="submit">Check</button></div>
+        <div class="res" id="zipRes" aria-live="polite"><span class="dot" aria-hidden="true"></span><span>Type a 5-digit ZIP code to see if we serve your area.</span></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="faq-sec" id="faq" aria-label="Questions">
+    <div class="wrap faq-grid">
+      <div><div class="eyebrow">Questions</div><h2 class="h2" style="margin-top:.6rem">Straight <span>answers.</span></h2><p class="lead" style="margin-top:1rem">Still unsure? Call the office and talk to an estimator, not a call center.</p></div>
+      <div class="faq" id="faqList">
+        <div class="qa" data-open="true"><button type="button" aria-expanded="true">Will insurance pay for my new roof?<span class="pm" aria-hidden="true"></span></button><div class="ans"><div><p>If hail or wind damaged it, often yes. We inspect first, send you a photo report, and meet your adjuster on the roof. You pay only your deductible on covered work.</p></div></div></div>
+        <div class="qa" data-open="false"><button type="button" aria-expanded="false">Can you really finish in one day?<span class="pm" aria-hidden="true"></span></button><div class="ans"><div><p>For most single-family homes under 35 squares, yes. Larger, steeper or metal roofs take two to three days, and we tell you the schedule before we start.</p></div></div></div>
+        <div class="qa" data-open="false"><button type="button" aria-expanded="false">How accurate is the instant estimate?<span class="pm" aria-hidden="true"></span></button><div class="ans"><div><p>It uses the same price per square our estimators start from. Your fixed price can change if we find extra layers, soft decking or skylights during the inspection.</p></div></div></div>
+        <div class="qa" data-open="false"><button type="button" aria-expanded="false">What does the warranty cover?<span class="pm" aria-hidden="true"></span></button><div class="ans"><div><p>Our workmanship warranty covers leaks caused by installation for 10 years. The shingle maker’s warranty covers the materials on top of that.</p></div></div></div>
+        <div class="qa" data-open="false"><button type="button" aria-expanded="false">Do I need to be home on install day?<span class="pm" aria-hidden="true"></span></button><div class="ans"><div><p>No. We need access to an outdoor power outlet and the driveway clear for the trailer. Most people go to work and come home to a finished roof.</p></div></div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cta-band"><h2 class="h2">Hail last week? <span>Get it checked free.</span></h2><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a class="btn" href="#estimate">Book a Free Inspection <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="tel:+12145550136">(214) 555-0136</a></div></div>
+    <div class="foot-grid">
+      <div><a class="logo" href="#top" translate="no" style="color:var(--ink)"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 17 16 5l13 12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.5 27h7l1.6-9.5h-10.2L12.5 27Z" fill="#e3924f"/></svg><span>KEYSTONE<small>Roofing & Exteriors</small></span></a><p style="color:var(--muted);margin-top:1rem;max-width:22rem">Roof replacement, storm repair and gutters across Dallas–Fort Worth.</p></div>
+      <div><h4>Services</h4><ul><li><a href="#services">Roof replacement</a></li><li><a href="#services">Storm & hail repair</a></li><li><a href="#services">Metal roofing</a></li><li><a href="#services">Gutters</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#process">Install day</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#area">Service area</a></li><li><a href="#faq">Questions</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="tel:+12145550136">(214) 555-0136</a></li><li><a href="mailto:hello@keystone.example">hello@keystone.example</a></li><li style="color:var(--muted)">Mon–Sat 7:00–19:00</li></ul></div>
+    </div>
+    <div class="legal"><span>Keystone Roofing & Exteriors is a fictional company made to show what your site could look like. Reviews, ratings, prices and the phone number are examples.</span><span>Photos on Unsplash: Roger Starnes Sr, Michael Jasmund, Meg, Rocco Stoppoloni, Zohair Mirza, Raze Solar, Phil Hearing, Aleksi Partanen, Tolu Akinyemi, Angelica Teran.</span></div>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const usd0 = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+const num = new Intl.NumberFormat('en-US');
+const project = (v, d = 0.99) => (v / 1000) * d / (1 - d);
+const rubberband = (o, dim, c = 0.55) => (o * dim * c) / (dim + c * Math.abs(o));
+function spring({ from, to, velocity = 0, damping = 1, response = .45, eps = .3, onUpdate, onDone }) {
+  if (REDUCE) { onUpdate(to); onDone && onDone(); return { stop: () => ({ x: to, v: 0 }) }; }
+  const w = 2 * Math.PI / response, k = w * w, c = 2 * damping * w; let x = from, v = velocity, last = performance.now(), id;
+  const tick = (t) => { const dt = Math.min(.064, (t - last) / 1000); last = t; const n = Math.max(1, Math.ceil(dt / .004)), h = dt / n;
+    for (let i = 0; i < n; i++) { const a = -k * (x - to) - c * v; v += a * h; x += v * h; }
+    if (Math.abs(v) < eps * 10 && Math.abs(x - to) < eps) { onUpdate(to); onDone && onDone(); return; } onUpdate(x); id = requestAnimationFrame(tick); };
+  id = requestAnimationFrame(tick); return { stop() { cancelAnimationFrame(id); return { x, v }; } };
+}
+function tracker() { let h = []; return { push(x, t) { h.push({ x, t }); while (h.length > 2 && t - h[0].t > 100) h.shift(); }, velocity(now) { if (h.length < 2) return 0; const a = h[0], b = h[h.length - 1]; if (now - b.t > 60) return 0; return (b.x - a.x) / ((b.t - a.t) / 1000 || 1); }, reset() { h = []; } }; }
+const toastEl = document.getElementById('toast'); let toastT;
+const toast = (m) => { toastEl.textContent = m; toastEl.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('on'), 2800); };
+
+/* ---------- Theme: dark by default, remembers the visitor's choice ---------- */
+const root = document.documentElement, themeBtn = document.getElementById('themeBtn'), themeMeta = document.querySelector('meta[name="theme-color"]');
+const effTheme = () => root.dataset.theme || 'dark';
+function paintTheme() { const t = effTheme(); themeBtn.dataset.mode = t; themeBtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'); themeBtn.setAttribute('aria-pressed', t === 'dark'); themeMeta.setAttribute('content', t === 'dark' ? '#0f1215' : '#eef0f1'); }
+themeBtn.addEventListener('click', () => {
+  const next = effTheme() === 'dark' ? 'light' : 'dark';
+  const apply = () => { root.dataset.theme = next; try { localStorage.setItem('keystone-theme', next); } catch (e) {} paintTheme(); };
+  if (!document.startViewTransition || REDUCE) { apply(); return; }
+  const r = themeBtn.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2, rad = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+  document.startViewTransition(apply).ready.then(() => root.animate({ clipPath: [`circle(0px at ${cx}px ${cy}px)`, `circle(${rad}px at ${cx}px ${cy}px)`] }, { duration: 750, easing: 'cubic-bezier(.22,1,.36,1)', pseudoElement: '::view-transition-new(root)' })).catch(() => {});
+});
+paintTheme();
+
+/* ---------- Top bar ---------- */
+const bar = document.getElementById('bar'), actionBar = document.getElementById('actionBar');
+const onScroll = () => { const locked = document.body.classList.contains('locked'); bar.classList.toggle('pill', scrollY > 60 && !locked); bar.classList.toggle('solid', locked); actionBar.classList.toggle('on', scrollY > innerHeight * .6 && !locked); };
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+const nav = document.getElementById('nav'), ind = document.getElementById('navInd'), svcBtn = document.getElementById('svcBtn'), mega = document.getElementById('mega');
+let megaOpen = false, closeT;
+function moveInd(el) { if (!el) { ind.style.opacity = 0; return; } const r = el.getBoundingClientRect(), nr = nav.getBoundingClientRect(); ind.style.left = r.left - nr.left + 'px'; ind.style.width = r.width + 'px'; ind.style.opacity = 1; }
+nav.querySelectorAll('.nav-item').forEach((it) => { it.addEventListener('pointerenter', () => moveInd(it)); it.addEventListener('focus', () => moveInd(it)); });
+nav.addEventListener('pointerleave', () => moveInd(megaOpen ? svcBtn : null));
+function setMega(o) { megaOpen = o; mega.classList.toggle('open', o); svcBtn.setAttribute('aria-expanded', o); if (o) moveInd(svcBtn); }
+svcBtn.addEventListener('click', () => setMega(!megaOpen));
+svcBtn.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { clearTimeout(closeT); setMega(true); } });
+[svcBtn, mega].forEach((el) => { el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') closeT = setTimeout(() => { setMega(false); moveInd(null); }, 220); }); el.addEventListener('pointerenter', () => clearTimeout(closeT)); });
+document.addEventListener('click', (e) => { if (megaOpen && !mega.contains(e.target) && !svcBtn.contains(e.target)) setMega(false); });
+const megaImgs = [...mega.querySelectorAll('.mega-preview img')];
+mega.querySelectorAll('.mega-link').forEach((a) => {
+  const show = () => { mega.querySelectorAll('.mega-link').forEach((o) => o.classList.toggle('active', o === a)); megaImgs.forEach((im) => im.classList.toggle('on', im.dataset.k === a.dataset.img)); document.getElementById('megaTitle').textContent = a.dataset.title; document.getElementById('megaSub').textContent = a.dataset.sub; };
+  a.addEventListener('pointerenter', show); a.addEventListener('focus', show); a.addEventListener('click', () => setMega(false));
+});
+const menuBtn = document.getElementById('menuBtn'), sheet = document.getElementById('sheet');
+function setSheet(o) { sheet.classList.toggle('open', o); menuBtn.setAttribute('aria-expanded', o); menuBtn.setAttribute('aria-label', o ? 'Close menu' : 'Open menu'); document.body.classList.toggle('locked', o); onScroll(); }
+menuBtn.addEventListener('click', () => setSheet(!sheet.classList.contains('open')));
+sheet.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setSheet(false)));
+addEventListener('keydown', (e) => { if (e.key !== 'Escape') return; if (megaOpen) { setMega(false); svcBtn.focus(); } if (sheet.classList.contains('open')) { setSheet(false); menuBtn.focus(); } });
+
+/* ---------- Before / after: 1:1 drag with grab offset, momentum, rubber band ---------- */
+(() => {
+  const cmp = document.getElementById('compare'), hint = document.getElementById('baHint');
+  let p = 50, anim = null, drag = null, touched = false; const vt = tracker();
+  const setP = (v) => { p = v; cmp.style.setProperty('--p', clamp(v, -4, 104) + '%'); cmp.setAttribute('aria-valuenow', Math.round(clamp(v, 0, 100))); };
+  const shape = (raw, W) => raw < 0 ? -rubberband(-raw * W / 100, W) * 100 / W : raw > 100 ? 100 + rubberband((raw - 100) * W / 100, W) * 100 / W : raw;
+  const settle = (to, v = 0, d = 1) => { anim && anim.stop(); anim = spring({ from: p, to, velocity: v, damping: d, response: .45, eps: .01, onUpdate: setP }); };
+  const firstTouch = () => { if (!touched) { touched = true; hint.classList.add('gone'); } };
+  cmp.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return; anim && anim.stop(); firstTouch();
+    const r = cmp.getBoundingClientRect(), hx = r.left + r.width * p / 100, onH = Math.abs(e.clientX - hx) < 34;
+    drag = { r, off: onH ? e.clientX - hx : 0 }; cmp.setPointerCapture(e.pointerId); cmp.classList.add('dragging'); vt.reset(); vt.push(e.clientX, e.timeStamp);
+    if (!onH) { settle((e.clientX - r.left) / r.width * 100); drag.spr = true; }
+  });
+  cmp.addEventListener('pointermove', (e) => { if (!drag) return; vt.push(e.clientX, e.timeStamp); if (drag.spr) { anim && anim.stop(); drag.spr = false; } setP(shape((e.clientX - drag.off - drag.r.left) / drag.r.width * 100, drag.r.width)); });
+  const end = (e) => { if (!drag) return; cmp.classList.remove('dragging'); const v = vt.velocity(e.timeStamp), W = drag.r.width, fl = Math.abs(v) > 300; if (!drag.spr || fl) settle(clamp(p + project(v) / W * 100, 0, 100), v / W * 100, fl ? .8 : 1); drag = null; };
+  cmp.addEventListener('pointerup', end); cmp.addEventListener('pointercancel', end);
+  cmp.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft') { e.preventDefault(); firstTouch(); settle(clamp(Math.round(p) - 5, 0, 100)); } if (e.key === 'ArrowRight') { e.preventDefault(); firstTouch(); settle(clamp(Math.round(p) + 5, 0, 100)); } });
+  // one demo sweep when it first scrolls into view; any touch stops it
+  new IntersectionObserver(([en], io) => { if (!en.isIntersecting || REDUCE) return; io.disconnect(); const seq = [72, 30, 50]; const run = (i) => { if (touched || i >= seq.length) return; anim = spring({ from: p, to: seq[i], response: .6, eps: .01, onUpdate: setP, onDone: () => setTimeout(() => run(i + 1), 120) }); }; setTimeout(() => run(0), 500); }, { threshold: .6 }).observe(cmp);
+})();
+
+/* ---------- Instant estimate ---------- */
+const state = { sqft: 2400, stories: '1', pitch: 'std', mat: 'shingle' };
+const MATS = { shingle: { lo: 450, hi: 600, daysPer: 40, name: 'impact shingles' }, metal: { lo: 1100, hi: 1450, daysPer: 18, name: 'standing-seam metal' }, tile: { lo: 900, hi: 1250, daysPer: 15, name: 'concrete tile' } };
+const PITCH = { low: 1.06, std: 1.2, steep: 1.42 };
+function calc() {
+  const footprint = state.sqft / +state.stories + 0.12 * state.sqft; // eaves overhang
+  const area = footprint * PITCH[state.pitch] * 1.1;                    // 10% waste
+  const squares = area / 100, m = MATS[state.mat];
+  const storyAdd = 1 + (+state.stories - 1) * .06, steepAdd = state.pitch === 'steep' ? 1.12 : 1;
+  const lo = squares * m.lo * storyAdd * steepAdd, hi = squares * m.hi * storyAdd * steepAdd;
+  const days = Math.max(1, Math.ceil(squares / m.daysPer));
+  const r = .0999 / 12, n = 120, mo = lo * r / (1 - Math.pow(1 + r, -n));
+  return { lo: Math.round(lo / 100) * 100, hi: Math.round(hi / 100) * 100, squares, days, mo };
+}
+const priceOut = document.getElementById('priceOut'), sqOut = document.getElementById('sqOut'), daysOut = document.getElementById('daysOut'), moOut = document.getElementById('moOut');
+let shown = { lo: 0, hi: 0, mo: 0 }, pa = null;
+function render() {
+  const r = calc();
+  sqOut.textContent = `${Math.round(r.squares)} squares`; daysOut.textContent = r.days === 1 ? '1 day' : `${r.days} days`;
+  const from = { ...shown }; pa && pa.stop();
+  pa = spring({ from: 0, to: 1, response: .55, eps: .002, onUpdate: (t) => { shown = { lo: lerp(from.lo, r.lo, t), hi: lerp(from.hi, r.hi, t), mo: lerp(from.mo, r.mo, t) };
+    priceOut.innerHTML = `${usd0.format(Math.round(shown.lo / 10) * 10)} <span>–</span> ${usd0.format(Math.round(shown.hi / 10) * 10)}`; moOut.textContent = `${usd0.format(Math.round(shown.mo))}/mo`; } });
+}
+/* Draggable range: tracks the finger, springs to the nearest 100 sq ft */
+(() => {
+  const el = document.getElementById('sqft'), out = document.getElementById('sqftOut'), MIN = 1000, MAX = 5000, STEP = 100;
+  let x = 0, drag = null, an = null;
+  const W = () => el.clientWidth, toV = (px) => MIN + clamp(px / W()) * (MAX - MIN), toX = (v) => (v - MIN) / (MAX - MIN) * W();
+  const set = (px, commit) => { x = px; el.style.setProperty('--x', clamp(px, 0, W()) + 'px'); const v = Math.round(toV(px) / STEP) * STEP; if (v !== state.sqft) { state.sqft = v; out.textContent = `${num.format(v)} sq ft`; el.setAttribute('aria-valuenow', v); el.setAttribute('aria-valuetext', `${num.format(v)} square feet`); render(); } };
+  const go = (v) => { an && an.stop(); an = spring({ from: x, to: toX(v), response: .4, eps: .2, onUpdate: set }); };
+  el.addEventListener('pointerdown', (e) => { an && an.stop(); const r = el.getBoundingClientRect(); drag = { r }; el.setPointerCapture(e.pointerId); el.classList.add('dragging'); go(clamp(Math.round(toV(e.clientX - r.left) / STEP) * STEP, MIN, MAX)); });
+  el.addEventListener('pointermove', (e) => { if (!drag) return; an && an.stop(); set(e.clientX - drag.r.left); });
+  const end = () => { if (!drag) return; drag = null; el.classList.remove('dragging'); go(state.sqft); };
+  el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+  el.addEventListener('keydown', (e) => { const d = { ArrowRight: STEP, ArrowUp: STEP, ArrowLeft: -STEP, ArrowDown: -STEP, PageUp: 500, PageDown: -500 }[e.key]; if (d) { e.preventDefault(); go(clamp(state.sqft + d, MIN, MAX)); } if (e.key === 'Home') { e.preventDefault(); go(MIN); } if (e.key === 'End') { e.preventDefault(); go(MAX); } });
+  addEventListener('resize', () => set(toX(state.sqft)));
+  requestAnimationFrame(() => set(toX(state.sqft)));
+})();
+function segInit(root, onChange) {
+  const btns = [...root.querySelectorAll('button')], thumb = root.querySelector('.thumb');
+  const place = () => { const on = btns.find((b) => b.getAttribute('aria-pressed') === 'true') || btns[0]; thumb.style.width = on.offsetWidth + 'px'; thumb.style.transform = `translateX(${on.offsetLeft - 4}px)`; };
+  btns.forEach((b) => b.addEventListener('click', () => { btns.forEach((o) => o.setAttribute('aria-pressed', o === b)); place(); onChange(b.dataset.v); }));
+  requestAnimationFrame(place); new ResizeObserver(place).observe(root);
+}
+document.querySelectorAll('.est .seg').forEach((s) => segInit(s, (v) => { state[s.dataset.seg] = v; render(); }));
+document.querySelectorAll('#mats .mat').forEach((b, _, all) => b.addEventListener('click', () => { all.forEach((o) => o.setAttribute('aria-pressed', o === b)); state.mat = b.dataset.v; render(); }));
+render();
+document.getElementById('bookForm').addEventListener('submit', (e) => {
+  e.preventDefault(); const f = e.currentTarget, msg = document.getElementById('bookMsg');
+  const nameIn = document.getElementById('fName'), telIn = document.getElementById('fPhone'), zipIn = document.getElementById('fZip');
+  const name = nameIn.value.trim(), tel = telIn.value.replace(/\D/g, ''), zip = zipIn.value.trim();
+  if (!name) { msg.textContent = 'Add your name so we know who to ask for.'; nameIn.focus(); return; }
+  if (tel.length < 10) { msg.textContent = 'Enter a 10-digit phone number so an estimator can call you.'; telIn.focus(); return; }
+  if (!/^\d{5}$/.test(zip)) { msg.textContent = 'Enter your 5-digit ZIP code.'; zipIn.focus(); return; }
+  const r = calc(); msg.textContent = `Thanks, ${name.split(' ')[0]}. On the live site this books your free inspection and sends your ${MATS[state.mat].name} estimate (${usd0.format(r.lo)}–${usd0.format(r.hi)}) to the office. This sample doesn’t send anything.`;
+});
+
+/* ---------- Install-day story ---------- */
+const story = document.getElementById('process'), layers = [...story.querySelectorAll('.layer')], chaps = [...story.querySelectorAll('.chap')], tk = [...story.querySelectorAll('.ticks b')], clock = document.getElementById('clock');
+const N = layers.length; let sp = 0;
+function storyFrame() {
+  const r = story.getBoundingClientRect(); if (r.bottom < -100 || r.top > innerHeight + 100) return;
+  const target = clamp(-r.top / (r.height - innerHeight)); sp = REDUCE ? target : lerp(sp, target, .14);
+  const seg = sp * N;
+  layers.forEach((l, k) => { const rev = k === 0 ? 1 : smooth(k - .35, k + .05, seg); l.style.clipPath = k === 0 ? 'none' : `inset(${((1 - rev) * 100).toFixed(2)}% 0 0 0)`; const loc = Math.min(1, clamp(seg - k + .35, 0, 1.4)); l.querySelector('img').style.transform = `scale(${(1.18 - .14 * loc).toFixed(4)})`; });
+  chaps.forEach((c, k) => { const inO = k === 0 ? 1 : smooth(k - .15, k + .1, seg), outO = k === N - 1 ? 1 : 1 - smooth(k + .62, k + .82, seg), o = inO * outO; c.style.opacity = o.toFixed(3); c.style.transform = `translateY(${((1 - inO) * 30 - (1 - outO) * 30).toFixed(1)}px)`; c.style.visibility = o < .01 ? 'hidden' : 'visible'; });
+  tk.forEach((b, k) => (b.style.width = (clamp(seg - k) * 100).toFixed(1) + '%'));
+  const mins = Math.round((7 * 60 + sp * 11 * 60) / 15) * 15; const h = Math.floor(mins / 60), m = mins % 60;
+  clock.textContent = `${h > 12 ? h - 12 : h}:${String(m).padStart(2, '0')}${h >= 12 ? ' pm' : ' am'}`;
+}
+(function loop() { storyFrame(); requestAnimationFrame(loop); })();
+
+/* ---------- ZIP check ---------- */
+const ZIPS = { '75001': 'Addison', '75002': 'Allen', '75013': 'Allen', '75023': 'Plano', '75024': 'Plano', '75025': 'Plano', '75033': 'Frisco', '75034': 'Frisco', '75035': 'Frisco', '75069': 'McKinney', '75070': 'McKinney', '75080': 'Richardson', '75201': 'Dallas', '75204': 'Dallas', '75206': 'Dallas', '75214': 'Dallas', '75038': 'Irving', '75039': 'Irving', '76010': 'Arlington', '76011': 'Arlington', '76102': 'Fort Worth', '76107': 'Fort Worth', '76201': 'Denton' };
+document.getElementById('zipForm').addEventListener('submit', (e) => {
+  e.preventDefault(); const z = document.getElementById('zipIn').value.trim(), res = document.getElementById('zipRes'), txt = res.querySelector('span:last-child');
+  res.classList.remove('yes', 'no'); void res.offsetWidth;
+  if (!/^\d{5}$/.test(z)) { txt.textContent = 'Enter all 5 digits of your ZIP code.'; return; }
+  const city = ZIPS[z];
+  if (city) { res.classList.add('yes'); txt.innerHTML = `<b>Yes, we cover ${z} (${city}).</b> Inspections there usually happen within 2 days.`; }
+  else if (/^7[56]/.test(z)) { res.classList.add('yes'); txt.innerHTML = `<b>Yes, ${z} is in our North Texas area.</b> Call to confirm the inspection day.`; }
+  else { res.classList.add('no'); txt.innerHTML = `<b>${z} is outside our area.</b> We can recommend a roofer we trust near you.`; }
+});
+
+/* ---------- FAQ: one open at a time ---------- */
+const qas = [...document.querySelectorAll('.qa')];
+qas.forEach((qa) => qa.querySelector('button').addEventListener('click', () => { const open = qa.dataset.open !== 'true'; qas.forEach((o) => { const on = o === qa && open; o.dataset.open = on; o.querySelector('button').setAttribute('aria-expanded', on); }); }));
+
+document.querySelectorAll('a[href^="tel:"]').forEach((a) => a.addEventListener('click', () => toast('On the live site this calls the office. The number here is an example.')));
+})();
+</script>
+</body>
+</html>
