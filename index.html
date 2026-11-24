@@ -337,6 +337,26 @@ footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(-
 .toast.on { transform: none; opacity: 1; }
 @media (max-width: 900px) { .toast { bottom: calc(max(12px, env(safe-area-inset-bottom, 0px)) + 86px); } }
 
+
+/* ===== Motion layer ===== */
+.band { overflow: hidden; padding-block: clamp(1.3rem, 3vw, 2rem); border-bottom: 1px solid var(--line); background: var(--bg); }
+.band-track { display: flex; width: max-content; gap: 2rem; align-items: center; will-change: transform; font-family: var(--display); font-weight: 800; font-stretch: 120%; font-size: clamp(2.2rem, 5.6vw, 4.6rem); letter-spacing: -0.03em; line-height: 1; white-space: nowrap; text-transform: uppercase; }
+.band-track span:nth-child(4n+1) { color: var(--ink); }
+.band-track span:nth-child(4n+3) { color: transparent; -webkit-text-stroke: 1.5px var(--muted); }
+.band-track i { font-style: normal; display: inline-block; width: .55em; height: .55em; background: var(--copper); clip-path: polygon(50% 0, 100% 55%, 82% 55%, 82% 100%, 18% 100%, 18% 55%, 0 55%); }
+.bento .tile { clip-path: inset(100% 0 0 0 round 24px); transition: clip-path 1.2s cubic-bezier(.22, 1, .36, 1) var(--d, 0s); }
+.bento .tile img { transform: scale(1.18); transition: transform 1.6s cubic-bezier(.22, 1, .36, 1) var(--d, 0s); }
+.bento.in .tile { clip-path: inset(0 0 0 0 round 24px); }
+.bento.in .tile img { transform: scale(1); }
+.bento.in .tile:hover img { transform: scale(1.05); transition-delay: 0s; transition-duration: 1.2s; }
+.bento .tile .in { position: relative; z-index: 1; transform: translateY(14px); opacity: 0; transition: transform 1s var(--spring) calc(var(--d, 0s) + .35s), opacity .6s calc(var(--d, 0s) + .35s); }
+.bento.in .tile .in { transform: none; opacity: 1; }
+.tile .go { z-index: 1; }
+.tile .sheen { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; transition: opacity .4s; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 220, 180, .22), transparent 60%); mix-blend-mode: soft-light; }
+.tile:hover .sheen { opacity: 1; }
+.magnet { transition: transform .7s var(--bounce), box-shadow .4s var(--spring), background-color .25s; }
+@media (prefers-reduced-motion: reduce) { .bento .tile, .bento .tile img, .bento .tile .in { clip-path: none !important; transform: none !important; opacity: 1 !important; } }
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; } .hero-img { transform: scale(1.02); } }
 @media (prefers-reduced-transparency: reduce) { .bar::before, .mega, .action-bar, .zip { -webkit-backdrop-filter: none; backdrop-filter: none; } .bar::before, .mega, .action-bar { background: var(--surface); } }
 </style>
@@ -385,7 +405,7 @@ footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(-
       <button class="icon-btn theme-btn" type="button" id="themeBtn" aria-label="Switch to light mode">
         <svg viewBox="0 0 24 24" aria-hidden="true"><mask id="moonMask"><rect width="24" height="24" fill="#fff"/><circle class="cut" cx="24" cy="2" r="6" fill="#000"/></mask><circle class="core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#moonMask)"/><g class="rays" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 2.5v2"/><path d="M12 19.5v2"/><path d="M2.5 12h2"/><path d="M19.5 12h2"/><path d="m5.3 5.3 1.4 1.4"/><path d="m17.3 17.3 1.4 1.4"/><path d="m5.3 18.7 1.4-1.4"/><path d="m17.3 6.7 1.4-1.4"/></g></svg>
       </button>
-      <a class="btn cta" href="#estimate">Free Inspection</a>
+      <a class="btn cta magnet" href="#estimate">Free Inspection</a>
       <button class="icon-btn menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="sheet" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path class="l1" d="M5 9h14"/><path class="l2" d="M5 15h14"/></svg></button>
     </div>
   </header>
@@ -417,10 +437,12 @@ footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(-
           <p>Roof replacement and storm repair across Dallas–Fort Worth. Free inspection, a fixed price before we start, and help with your insurance claim.</p>
           <div class="trust"><span><b>★ 4.9</b> 1,240 reviews (example)</span><span>Licensed & insured</span><span>10-year workmanship warranty</span></div>
         </div>
-        <div class="ctas"><a class="btn" href="#estimate">Get My Instant Estimate <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="#process">See Install Day</a></div>
+        <div class="ctas"><a class="btn magnet" href="#estimate">Get My Instant Estimate <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost magnet" href="#process">See Install Day</a></div>
       </div>
     </div>
   </section>
+
+  <div class="band" aria-hidden="true"><div class="band-track" id="band"></div></div>
 
   <section class="ba-sec" id="results" aria-label="Before and after">
     <div class="wrap ba-grid">
@@ -489,7 +511,7 @@ footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(-
               <label for="fPhone">Phone<input id="fPhone" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="(214) 555-0100" required></label>
             </div>
             <label for="fZip">ZIP code<input id="fZip" name="zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="75024" required></label>
-            <button class="btn" type="submit">Book My Free Inspection <span class="arr" aria-hidden="true">→</span></button>
+            <button class="btn magnet" type="submit">Book My Free Inspection <span class="arr" aria-hidden="true">→</span></button>
             <p class="msg" id="bookMsg" aria-live="polite"></p>
           </form>
           <p class="note">A guide range for Dallas–Fort Worth, including tear-off, underlayment and cleanup. Your fixed price comes after a free on-roof inspection. Financing shown at an example 9.99% APR over 120 months.</p>
@@ -518,12 +540,12 @@ footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(-
     <div class="wrap">
       <div class="est-head" style="margin:0"><div><div class="eyebrow">Services</div><h2 class="h2" style="margin-top:.6rem">Everything above <span>your gutters.</span></h2></div><p class="lead">One crew, one warranty, one point of contact from inspection to final walkthrough.</p></div>
       <div class="bento">
-        <a class="tile t1" href="#estimate"><img src="img/crew.jpg" alt="Two roofers installing a new roof" width="1400" height="933" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Roof Replacement</b><small>Full tear-off and new roof, finished in one day for most homes.</small></div></a>
-        <a class="tile t2" href="#estimate"><img src="img/tearoff.jpg" alt="Storm-damaged shingles being replaced" width="1800" height="1200" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Storm & Hail Repair</b><small>We document the damage and meet your adjuster.</small></div></a>
-        <a class="tile t3" href="#estimate"><img src="img/metal2.jpg" alt="A standing-seam metal roof with a cupola" width="1200" height="1800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Metal Roofing</b><small>Standing-seam panels rated for 50 years.</small></div></a>
-        <a class="tile t4" href="#estimate"><img src="img/gutter.jpg" alt="Gutters along a roof edge" width="1200" height="800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Gutters</b><small>Seamless 6-inch.</small></div></a>
-        <a class="tile t5" href="#estimate"><img src="img/repair.jpg" alt="A roofer inspecting a roof" width="1200" height="800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Inspections</b><small>Free, with photos.</small></div></a>
-        <div class="tile info t6"><div class="in"><small style="color:inherit;opacity:.8;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem">Storm line</small><div><b>24/7</b><small style="color:inherit;opacity:.85;display:block">Emergency tarping within 4 hours of your call.</small></div></div></div>
+        <a class="tile t1" href="#estimate" style="--d:0.00s"><img src="img/crew.jpg" alt="Two roofers installing a new roof" width="1400" height="933" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Roof Replacement</b><small>Full tear-off and new roof, finished in one day for most homes.</small></div></a>
+        <a class="tile t2" href="#estimate" style="--d:0.09s"><img src="img/tearoff.jpg" alt="Storm-damaged shingles being replaced" width="1800" height="1200" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Storm & Hail Repair</b><small>We document the damage and meet your adjuster.</small></div></a>
+        <a class="tile t3" href="#estimate" style="--d:0.18s"><img src="img/metal2.jpg" alt="A standing-seam metal roof with a cupola" width="1200" height="1800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Metal Roofing</b><small>Standing-seam panels rated for 50 years.</small></div></a>
+        <a class="tile t4" href="#estimate" style="--d:0.27s"><img src="img/gutter.jpg" alt="Gutters along a roof edge" width="1200" height="800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Gutters</b><small>Seamless 6-inch.</small></div></a>
+        <a class="tile t5" href="#estimate" style="--d:0.36s"><img src="img/repair.jpg" alt="A roofer inspecting a roof" width="1200" height="800" loading="lazy"><span class="go" aria-hidden="true">→</span><div class="in"><b>Inspections</b><small>Free, with photos.</small></div></a>
+        <div class="tile info t6" style="--d:.45s"><div class="in"><small style="color:inherit;opacity:.8;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.72rem">Storm line</small><div><b>24/7</b><small style="color:inherit;opacity:.85;display:block">Emergency tarping within 4 hours of your call.</small></div></div></div>
       </div>
     </div>
   </section>
@@ -572,7 +594,7 @@ footer { padding-block: clamp(4rem, 8vw, 6rem) 2rem; border-top: 1px solid var(-
 
 <footer>
   <div class="wrap">
-    <div class="cta-band"><h2 class="h2">Hail last week? <span>Get it checked free.</span></h2><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a class="btn" href="#estimate">Book a Free Inspection <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost" href="tel:+12145550136">(214) 555-0136</a></div></div>
+    <div class="cta-band"><h2 class="h2">Hail last week? <span>Get it checked free.</span></h2><div style="display:flex;gap:.6rem;flex-wrap:wrap"><a class="btn magnet" href="#estimate">Book a Free Inspection <span class="arr" aria-hidden="true">→</span></a><a class="btn ghost magnet" href="tel:+12145550136">(214) 555-0136</a></div></div>
     <div class="foot-grid">
       <div><a class="logo" href="#top" translate="no" style="color:var(--ink)"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M3 17 16 5l13 12" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12.5 27h7l1.6-9.5h-10.2L12.5 27Z" fill="#e3924f"/></svg><span>KEYSTONE<small>Roofing & Exteriors</small></span></a><p style="color:var(--muted);margin-top:1rem;max-width:22rem">Roof replacement, storm repair and gutters across Dallas–Fort Worth.</p></div>
       <div><h4>Services</h4><ul><li><a href="#services">Roof replacement</a></li><li><a href="#services">Storm & hail repair</a></li><li><a href="#services">Metal roofing</a></li><li><a href="#services">Gutters</a></li></ul></div>
@@ -737,6 +759,26 @@ function storyFrame() {
   clock.textContent = `${h > 12 ? h - 12 : h}:${String(m).padStart(2, '0')}${h >= 12 ? ' pm' : ' am'}`;
 }
 (function loop() { storyFrame(); requestAnimationFrame(loop); })();
+
+
+/* ---------- Motion layer ---------- */
+(() => {
+  const words = ['Roof replacement', 'Hail repair', 'Metal roofing', 'Gutters', 'Free inspections', 'Insurance claims', 'Storm tarping'];
+  const band = document.getElementById('band');
+  band.innerHTML = [...words, ...words].map((w) => `<span>${w}</span><i></i>`).join('');
+  let x = 0, lastY = scrollY, vel = 0;
+  (function tick() { const y = scrollY, dy = y - lastY; lastY = y; vel += (dy - vel) * .12;
+    if (!REDUCE) { x -= dy * .45; const half = band.scrollWidth / 2 || 1; x = ((x % half) - half) % half; band.style.transform = `translate3d(${x.toFixed(1)}px,0,0) skewX(${clamp(-vel * .25, -10, 10).toFixed(2)}deg)`; }
+    requestAnimationFrame(tick); })();
+  const bento = document.querySelector('.bento');
+  new IntersectionObserver(([en], io) => { if (en.isIntersecting) { bento.classList.add('in'); io.disconnect(); } }, { threshold: .15 }).observe(bento);
+  bento.querySelectorAll('.tile:not(.info)').forEach((t) => { const sh = document.createElement('span'); sh.className = 'sheen'; t.prepend(sh);
+    t.addEventListener('pointermove', (e) => { const r = t.getBoundingClientRect(); t.style.setProperty('--mx', (e.clientX - r.left) + 'px'); t.style.setProperty('--my', (e.clientY - r.top) + 'px'); }); });
+  if (matchMedia('(pointer: fine)').matches && !REDUCE) document.querySelectorAll('.magnet').forEach((b) => {
+    b.addEventListener('pointermove', (e) => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${((e.clientX - (r.left + r.width / 2)) * .22).toFixed(1)}px, ${((e.clientY - (r.top + r.height / 2)) * .32).toFixed(1)}px)`; });
+    b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+  });
+})();
 
 /* ---------- ZIP check ---------- */
 const ZIPS = { '75001': 'Addison', '75002': 'Allen', '75013': 'Allen', '75023': 'Plano', '75024': 'Plano', '75025': 'Plano', '75033': 'Frisco', '75034': 'Frisco', '75035': 'Frisco', '75069': 'McKinney', '75070': 'McKinney', '75080': 'Richardson', '75201': 'Dallas', '75204': 'Dallas', '75206': 'Dallas', '75214': 'Dallas', '75038': 'Irving', '75039': 'Irving', '76010': 'Arlington', '76011': 'Arlington', '76102': 'Fort Worth', '76107': 'Fort Worth', '76201': 'Denton' };
